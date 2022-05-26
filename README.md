@@ -248,7 +248,7 @@ The scores will also be saved in the `results/<model_name>_<dataset_name>` direc
 Please `--save_results` for further [evaluating temporal warping error](https://github.com/phoenix104104/fast_blind_video_consistency#evaluation).
 
 ### Training
-Our training configures are provided in [`train_e2fgvi.json`](./configs/train_e2fgvi.json) (for E<sup>2</sup>FGVI) and [`train_e2fgvi_hq.json`](./configs/train_e2fgvi_hq.json) (for E<sup>2</sup>FGVI-HQ).
+Our training configures are provided in [`train_e2fgvi.json`](e2fgvi/configs/train_e2fgvi.json) (for E<sup>2</sup>FGVI) and [`train_e2fgvi_hq.json`](e2fgvi/configs/train_e2fgvi_hq.json) (for E<sup>2</sup>FGVI-HQ).
 
 Run one of the following commands for training:
 ```shell
@@ -284,6 +284,10 @@ You could follow [this pipeline](https://github.com/MCG-NKU/E2FGVI#evaluation) t
 ## Contact
 
 If you have any question, please feel free to contact us via `zhenli1031ATgmail.com` or `czlu919AToutlook.com`.
+
+## License
+Licensed under a [Creative Commons Attribution-NonCommercial 4.0 International](https://creativecommons.org/licenses/by-nc/4.0/) for Non-commercial use only.
+Any commercial use should get formal permission first.
 
 ## Acknowledgement
 

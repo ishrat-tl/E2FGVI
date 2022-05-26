@@ -7,6 +7,7 @@ class AdversarialLoss(nn.Module):
     Adversarial loss
     https://arxiv.org/abs/1711.10337
     """
+
     def __init__(self,
                  type='nsgan',
                  target_real_label=1.0,

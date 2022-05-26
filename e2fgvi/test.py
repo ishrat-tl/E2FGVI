@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
-import cv2
-from PIL import Image
-import numpy as np
+import argparse
 import importlib
 import os
-import argparse
-from tqdm import tqdm
-import matplotlib.pyplot as plt
-from matplotlib import animation
-import torch
 
-from core.utils import to_tensors
+import cv2
+import matplotlib.pyplot as plt
+import numpy as np
+import torch
+from PIL import Image
+from matplotlib import animation
+from tqdm import tqdm
+
+from e2fgvi.core.utils import to_tensors
 
 parser = argparse.ArgumentParser(description="E2FGVI")
 parser.add_argument("-v", "--video", type=str, required=True)
@@ -171,7 +172,7 @@ def main_worker():
                 idx = neighbor_ids[i]
                 img = np.array(pred_imgs[i]).astype(
                     np.uint8) * binary_masks[idx] + frames[idx] * (
-                        1 - binary_masks[idx])
+                              1 - binary_masks[idx])
                 if comp_frames[idx] is None:
                     comp_frames[idx] = img
                 else:

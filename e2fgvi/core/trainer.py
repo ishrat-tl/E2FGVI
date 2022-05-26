@@ -1,20 +1,20 @@
-import os
 import glob
-import logging
 import importlib
-from tqdm import tqdm
+import logging
+import os
 
 import torch
 import torch.nn as nn
+from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.utils.data import DataLoader
 from torch.utils.data.distributed import DistributedSampler
-from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.utils.tensorboard import SummaryWriter
+from tqdm import tqdm
 
-from core.lr_scheduler import MultiStepRestartLR, CosineAnnealingRestartLR
-from core.loss import AdversarialLoss
-from core.dataset import TrainDataset
-from model.modules.flow_comp import FlowCompletionLoss
+from e2fgvi.core.dataset import TrainDataset
+from e2fgvi.core.loss import AdversarialLoss
+from e2fgvi.core.lr_scheduler import MultiStepRestartLR, CosineAnnealingRestartLR
+from e2fgvi.model.modules.flow_comp import FlowCompletionLoss
 
 
 class Trainer:
@@ -227,7 +227,7 @@ class Trainer:
 
             # remove .module for saving
             if isinstance(self.netG, torch.nn.DataParallel) \
-               or isinstance(self.netG, DDP):
+                    or isinstance(self.netG, DDP):
                 netG = self.netG.module
                 if not self.config['model']['no_dis']:
                     netD = self.netD.module
@@ -275,7 +275,7 @@ class Trainer:
         logging.basicConfig(
             level=logging.INFO,
             format="%(asctime)s %(filename)s[line:%(lineno)d]"
-            "%(levelname)s %(message)s",
+                   "%(levelname)s %(message)s",
             datefmt="%a, %d %b %Y %H:%M:%S",
             filename=f"logs/{self.config['save_dir'].split('/')[-1]}.log",
             filemode='w')
@@ -333,7 +333,7 @@ class Trainer:
                 gen_clip = self.netD(comp_imgs)
                 gan_loss = self.adversarial_loss(gen_clip, True, False)
                 gan_loss = gan_loss \
-                    * self.config['losses']['adversarial_weight']
+                           * self.config['losses']['adversarial_weight']
                 gen_loss += gan_loss
                 self.add_summary(self.gen_writer, 'loss/gan_loss',
                                  gan_loss.item())
@@ -346,15 +346,15 @@ class Trainer:
             # generator l1 loss
             hole_loss = self.l1_loss(pred_imgs * masks, frames * masks)
             hole_loss = hole_loss / torch.mean(masks) \
-                * self.config['losses']['hole_weight']
+                        * self.config['losses']['hole_weight']
             gen_loss += hole_loss
             self.add_summary(self.gen_writer, 'loss/hole_loss',
                              hole_loss.item())
 
             valid_loss = self.l1_loss(pred_imgs * (1 - masks),
                                       frames * (1 - masks))
-            valid_loss = valid_loss / torch.mean(1-masks) \
-                * self.config['losses']['valid_weight']
+            valid_loss = valid_loss / torch.mean(1 - masks) \
+                         * self.config['losses']['valid_weight']
             gen_loss += valid_loss
             self.add_summary(self.gen_writer, 'loss/valid_loss',
                              valid_loss.item())

@@ -1,18 +1,18 @@
-import os
-import json
 import argparse
+import json
+import os
 from shutil import copyfile
 
 import torch
 import torch.multiprocessing as mp
 
-from core.trainer import Trainer
-from core.dist import (
+from e2fgvi.core.dist import (
     get_world_size,
     get_local_rank,
     get_global_rank,
     get_master_ip,
 )
+from e2fgvi.core.trainer import Trainer
 
 parser = argparse.ArgumentParser(description='E2FGVI')
 parser.add_argument('-c',
@@ -81,7 +81,7 @@ if __name__ == "__main__":
     # setup distributed parallel training environments
     if get_master_ip() == "127.0.0.1":
         # manually launch distributed processes
-        mp.spawn(main_worker, nprocs=config['world_size'], args=(config, ))
+        mp.spawn(main_worker, nprocs=config['world_size'], args=(config,))
     else:
         # multiple processes have been launched by openmpi
         config['local_rank'] = get_local_rank()

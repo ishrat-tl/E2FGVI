@@ -1,17 +1,17 @@
-import os
 import io
-import cv2
+import os
 import random
-import numpy as np
-from PIL import Image, ImageOps
 import zipfile
 
-import torch
-import matplotlib
+import cv2
 import matplotlib.patches as patches
-from matplotlib.path import Path
+import numpy as np
+import torch
+from PIL import Image, ImageOps
 from matplotlib import pyplot as plt
+from matplotlib.path import Path
 from torchvision import transforms
+
 
 # matplotlib.use('agg')
 
@@ -97,6 +97,7 @@ def to_tensors():
 class GroupRandomHorizontalFlowFlip(object):
     """Randomly horizontally flips the given PIL.Image with a probability of 0.5
     """
+
     def __init__(self, is_flow=True):
         self.is_flow = is_flow
 
@@ -119,6 +120,7 @@ class GroupRandomHorizontalFlowFlip(object):
 class GroupRandomHorizontalFlip(object):
     """Randomly horizontally flips the given PIL.Image with a probability of 0.5
     """
+
     def __init__(self, is_flow=False):
         self.is_flow = is_flow
 
@@ -159,6 +161,7 @@ class Stack(object):
 class ToTorchFormatTensor(object):
     """ Converts a PIL.Image (RGB) or numpy.ndarray (H x W x C) in the range [0, 255]
     to a torch.FloatTensor of shape (C x H x W) in the range [0.0, 1.0] """
+
     def __init__(self, div=True):
         self.div = div
 
@@ -239,7 +242,7 @@ def get_random_shape(edge_num=9, ratio=0.7, width=432, height=240):
     codes[0] = Path.MOVETO
     # Using this instad of Path.CLOSEPOLY avoids an innecessary straight line
     verts = np.stack((np.cos(angles), np.sin(angles))).T * \
-        (2*ratio*np.random.random(points_num)+1-ratio)[:, None]
+            (2 * ratio * np.random.random(points_num) + 1 - ratio)[:, None]
     verts[-1, :] = verts[0, :]
     path = Path(verts, codes)
     # draw paths into images
@@ -253,7 +256,7 @@ def get_random_shape(edge_num=9, ratio=0.7, width=432, height=240):
     fig.canvas.draw()
     # convert plt images into numpy images
     data = np.frombuffer(fig.canvas.tostring_rgb(), dtype=np.uint8)
-    data = data.reshape((fig.canvas.get_width_height()[::-1] + (3, )))
+    data = data.reshape((fig.canvas.get_width_height()[::-1] + (3,)))
     plt.close(fig)
     # postprocess
     data = cv2.resize(data, (width, height))[:, :, 0]

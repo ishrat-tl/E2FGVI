@@ -1,18 +1,17 @@
 import numpy as np
-from skimage import measure
-from scipy import linalg
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from scipy import linalg
+from skimage import measure
 
-from core.utils import to_tensors
+from e2fgvi.core.utils import to_tensors
 
 
 def calculate_epe(flow1, flow2):
     """Calculate End point errors."""
 
-    epe = torch.sum((flow1 - flow2)**2, dim=1).sqrt()
+    epe = torch.sum((flow1 - flow2) ** 2, dim=1).sqrt()
     epe = epe.view(-1)
     return epe.mean().item()
 
@@ -30,7 +29,7 @@ def calculate_psnr(img1, img2):
     assert img1.shape == img2.shape, \
         (f'Image shapes are differnet: {img1.shape}, {img2.shape}.')
 
-    mse = np.mean((img1 - img2)**2)
+    mse = np.mean((img1 - img2) ** 2)
     if mse == 0:
         return float('inf')
     return 20. * np.log10(255. / np.sqrt(mse))

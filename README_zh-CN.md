@@ -246,9 +246,9 @@ E<sup>2</sup>FGVI-HQ 的验证结果请参考 [[此处](https://github.com/MCG-N
 若需[验证temporal warping error](https://github.com/phoenix104104/fast_blind_video_consistency#evaluation), 请添加 `--save_results` 参数.
 
 ### 训练
-Our training configures are provided in [`train_e2fgvi.json`](./configs/train_e2fgvi.json) (for E<sup>2</sup>FGVI) and [`train_e2fgvi_hq.json`](./configs/train_e2fgvi_hq.json) (for E<sup>2</sup>FGVI-HQ).
+Our training configures are provided in [`train_e2fgvi.json`](e2fgvi/configs/train_e2fgvi.json) (for E<sup>2</sup>FGVI) and [`train_e2fgvi_hq.json`](e2fgvi/configs/train_e2fgvi_hq.json) (for E<sup>2</sup>FGVI-HQ).
 
-本文的训练配置如 [`train_e2fgvi.json`](./configs/train_e2fgvi.json) (对于 E<sup>2</sup>FGVI) 与 [`train_e2fgvi_hq.json`](./configs/train_e2fgvi_hq.json) (对于 E<sup>2</sup>FGVI-HQ) 所示.
+本文的训练配置如 [`train_e2fgvi.json`](e2fgvi/configs/train_e2fgvi.json) (对于 E<sup>2</sup>FGVI) 与 [`train_e2fgvi_hq.json`](e2fgvi/configs/train_e2fgvi_hq.json) (对于 E<sup>2</sup>FGVI-HQ) 所示.
 
 运行如下的一条命令进行训练：
 ```shell

@@ -1,17 +1,16 @@
-import os
 import json
+import os
 import random
 
 import cv2
-from PIL import Image
 import numpy as np
-
 import torch
 import torchvision.transforms as transforms
+from PIL import Image
 
-from core.utils import (TrainZipReader, TestZipReader,
-                        create_random_shape_with_random_motion, Stack,
-                        ToTorchFormatTensor, GroupRandomHorizontalFlip)
+from e2fgvi.core.utils import (TrainZipReader, TestZipReader,
+                               create_random_shape_with_random_motion, Stack,
+                               ToTorchFormatTensor, GroupRandomHorizontalFlip)
 
 
 class TrainDataset(torch.utils.data.Dataset):

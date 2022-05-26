@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
-import cv2
-import numpy as np
+import argparse
 import importlib
 import os
-import argparse
-from PIL import Image
 
+import cv2
+import numpy as np
 import torch
+from PIL import Image
 from torch.utils.data import DataLoader
 
-from core.dataset import TestDataset
-from core.metrics import calc_psnr_and_ssim, calculate_i3d_activations, calculate_vfid, init_i3d_model
+from e2fgvi.core.dataset import TestDataset
+from e2fgvi.core.metrics import calc_psnr_and_ssim, calculate_i3d_activations, calculate_vfid, init_i3d_model
 
 # global variables
 w, h = 432, 240
@@ -98,7 +98,7 @@ def main_worker(args):
                 for i in range(len(neighbor_ids)):
                     idx = neighbor_ids[i]
                     img = np.array(pred_img[i]).astype(np.uint8) * binary_masks[i] \
-                        + ori_frames[idx] * (1 - binary_masks[i])
+                          + ori_frames[idx] * (1 - binary_masks[i])
                     if comp_frames[idx] is None:
                         comp_frames[idx] = img
                     else:
@@ -133,10 +133,10 @@ def main_worker(args):
         output_i3d_activations.append(comp_i3d)
 
         print(
-            f'[{index+1:3}/{len(test_loader)}] Name: {str(video_name):25} | PSNR/SSIM: {cur_psnr:.4f}/{cur_ssim:.4f}'
+            f'[{index + 1:3}/{len(test_loader)}] Name: {str(video_name):25} | PSNR/SSIM: {cur_psnr:.4f}/{cur_ssim:.4f}'
         )
         eval_summary.write(
-            f'[{index+1:3}/{len(test_loader)}] Name: {str(video_name):25} | PSNR/SSIM: {cur_psnr:.4f}/{cur_ssim:.4f}\n'
+            f'[{index + 1:3}/{len(test_loader)}] Name: {str(video_name):25} | PSNR/SSIM: {cur_psnr:.4f}/{cur_ssim:.4f}\n'
         )
 
         # saving images for evaluating warpping errors
